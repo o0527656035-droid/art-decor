@@ -6,20 +6,17 @@
     <title>Wall Design | גלריית עיצוב ירוק וזהב</title>
     <style>
         /* ==============================
-           הגדרות משתני צבע (עבור ירוק וזהב)
+           הגדרות משתני צבע
            ============================== */
         :root {
-            --primary-green: #1a3c34; /* ירוק בקבוק עמוק */
-            --dark-green: #122a24;    /* ירוק כהה מאוד לרקעים */
-            --gold-main: #d4af37;    /* זהב קלאסי */
-            --gold-light: #f1e0ac;   /* זהב בהיר לאפקטים */
-            --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); /* גרדיאנט זהב יוקרתי */
+            --primary-green: #1a3c34; 
+            --dark-green: #122a24;    
+            --gold-main: #d4af37;    
+            --gold-light: #f1e0ac;   
+            --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); 
             --text-on-green: #ffffff;
-            --text-on-white: #333333;
-            --bg-cream: #fefdfa;     /* רקע לבן-קרם עדין */
         }
 
-        /* הגדרות כלליות */
         * {
             margin: 0;
             padding: 0;
@@ -28,159 +25,72 @@
         }
 
         body {
-            background-color: var(--bg-cream);
-            color: var(--text-on-white);
+            background: radial-gradient(circle at center, #1e453c 0%, #122a24 100%);
+            background-attachment: fixed;
+            color: var(--text-on-green);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
-        /* ==============================
-           תפריט ניווט (ירוק כהה)
-           ============================== */
+        /* תפריט ניווט - לוגו בימין, טקסט במרכז */
         nav {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* חלוקה ל-3 חלקים: שמאל ריק, מרכז טקסט, ימין לוגו */
             align-items: center;
-            background: var(--dark-green);
-            color: var(--text-on-green);
-            padding: 1.2rem 8%;
+            background: rgba(18, 42, 36, 0.95);
+            padding: 0.8rem 8%;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border-bottom: 2px solid var(--gold-main); /* קו זהב דק בתחתית */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border-bottom: 2px solid var(--gold-main);
+            backdrop-filter: blur(10px);
         }
 
-        .logo {
-            font-size: 1.8rem;
+        /* חלק הלוגו (מוצמד לימין בgrid) */
+        .logo-container {
+            grid-column: 3;
+            justify-self: end;
+        }
+
+        .logo-container img {
+            height: 65px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+        }
+
+        /* חלק הטקסט המרכזי */
+        .center-text {
+            grid-column: 2;
+            justify-self: center;
+            /* עיצוב הפונט והצבע */
+            font-family: 'Georgia', 'Times New Roman', Times, serif; /* פונט מעוצב */
+            font-size: 2.2rem;
             font-weight: bold;
-            letter-spacing: 1.5px;
-            /* שימוש בזהב ללוגו */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* צבע זהב עם גרדיאנט */
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
+            /* צל עדין כדי שייבלוט */
+            filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.5));
         }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-right: 30px;
-        }
-
-        nav ul li a {
-            color: var(--text-on-green);
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        /* אפקט קו תחתון זהב בטעינה */
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            right: 0;
-            background-color: var(--gold-main);
-            transition: width 0.3s;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        nav ul li a:hover {
-            color: var(--gold-light);
-        }
-
-        /* ==============================
-           אזור Hero
-           ============================== */
-        .hero {
-            height: 75vh;
-            /* שכבת ירוק שקופה על תמונת הרקע */
-            background: linear-gradient(rgba(26, 60, 52, 0.8), rgba(18, 42, 36, 0.9)), 
-                        url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2070') center/cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: var(--text-on-green);
-            padding: 0 20px;
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
-            /* כותרת זהב */
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-content p {
-            font-size: 1.4rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* כפתור ירוק עם גבול זהב */
-        .btn {
-            display: inline-block;
-            background: transparent;
-            color: var(--gold-main);
-            padding: 14px 35px;
-            text-decoration: none;
-            border-radius: 4px; /* פינות חדות יותר ליוקרה */
-            font-weight: bold;
-            font-size: 1.1rem;
-            border: 2px solid var(--gold-main);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background: var(--gold-main);
-            color: var(--dark-green);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        /* ==============================
-           גלריה
-           ============================== */
+        /* גלריה */
         .gallery-section {
-            padding: 80px 8%;
+            padding: 60px 8%;
             text-align: center;
         }
 
         .gallery-section h2 {
-            font-size: 3rem;
-            margin-bottom: 50px;
-            font-weight: 700;
-            color: var(--primary-green);
-            position: relative;
-        }
-
-        /* קו מפריד זהב */
-        .gallery-section h2::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 3px;
+            font-size: 2.8rem;
+            margin-bottom: 40px;
             background: var(--gold-gradient);
-            margin: 15px auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
 
         .grid-container {
@@ -191,13 +101,13 @@
 
         .grid-item {
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            height: 350px;
-            /* גבול ירוק דק */
-            border: 1px solid rgba(26, 60, 52, 0.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 380px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: all 0.4s ease;
+            background: var(--dark-green);
         }
 
         .grid-item img {
@@ -205,22 +115,20 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.6s ease;
+            opacity: 0.9;
         }
 
-        /* אפקט ריחוף על תמונה: הגדלה וזוהר זהב */
         .grid-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
+            transform: translateY(-10px);
             border-color: var(--gold-main);
         }
 
         .grid-item:hover img {
-            transform: scale(1.08);
+            transform: scale(1.1);
+            opacity: 1;
         }
 
-        /* ==============================
-           מודל Lightbox (הגדלת תמונה)
-           ============================== */
+        /* מודל הגדלה */
         .modal {
             display: none;
             position: fixed;
@@ -229,116 +137,71 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(18, 42, 36, 0.95); /* ירוק כהה מאוד כשקוף */
+            background: rgba(10, 20, 18, 0.98);
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        .modal.open {
-            display: flex;
-            opacity: 1;
-        }
+        .modal.open { display: flex; }
+        .modal img { max-width: 90%; max-height: 85%; border: 3px solid var(--gold-main); }
+        .close-modal { position: absolute; top: 25px; right: 40px; color: var(--gold-main); font-size: 50px; cursor: pointer; }
 
-        .modal img {
-            max-width: 90%;
-            max-height: 85%;
-            border: 4px solid var(--gold-main); /* מסגרת זהב לתמונה המוגדלת */
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.5);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 25px;
-            right: 40px;
-            color: var(--gold-main);
-            font-size: 50px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-modal:hover {
-            color: var(--gold-light);
-        }
-
-        /* ==============================
-           פוטר (ירוק כהה)
-           ============================== */
         footer {
             background: var(--dark-green);
-            color: #aab;
+            color: #8c9c98;
             text-align: center;
             padding: 40px 20px;
-            margin-top: 60px;
-            border-top: 1px solid var(--gold-main);
+            border-top: 2px solid var(--gold-main);
         }
 
-        footer p {
-            margin-bottom: 10px;
-        }
+        .gold-text { color: var(--gold-main); font-weight: bold; }
 
-        footer .gold-text {
-            color: var(--gold-main);
-            font-weight: bold;
-        }
-
-        /* ==============================
-           רספונסיביות
-           ============================== */
+        /* התאמה לנייד */
         @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.8rem; }
-            .hero-content p { font-size: 1.1rem; }
-            nav { flex-direction: column; padding: 1.2rem; }
-            nav ul { margin-top: 20px; flex-wrap: wrap; justify-content: center; }
-            nav ul li { margin: 5px 15px; }
-            .grid-container { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            nav { 
+                grid-template-columns: 1fr; /* שורה אחת לכל אלמנט בנייד */
+                padding: 1rem; 
+                justify-items: center; 
+                gap: 10px;
+            } 
+            .logo-container { grid-column: 1; justify-self: center; }
+            .logo-container img { height: 50px; }
+            .center-text { grid-column: 1; font-size: 1.6rem; letter-spacing: 1px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">ART DECOR</div>
-        <ul>
-            <li><a href="#home">בית</a></li>
-            <li><a href="#gallery">גלריה</a></li>
-            <li><a href="#contact">צור קשר</a></li>
-        </ul>
+        <div class="center-text">ART DECOR</div>
+        
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/o0527656035-droid/art-decor/refs/heads/main/LOGO-ART.png" alt="Art Decor Logo">
+        </div>
     </nav>
 
-    <header id="home" class="hero">
-        <div class="hero-content">
-            <h1>עיצוב קירות יוקרתי</h1>
-            <p>שילוב מנצח של טכניקות מתקדמות, חומרים איכותיים וסגנון על-זמני לחלל שלכם.</p>
-            <a href="#gallery" class="btn">לצפייה בתיק העבודות</a>
-        </div>
-    </header>
-
     <section id="gallery" class="gallery-section">
-        <h2>הפרויקטים הנבחרים</h2>
+        <h2>גלריית פרויקטים נבחרים</h2>
         <div class="grid-container">
             <div class="grid-item"><img src="https://raw.githubusercontent.com/o0527656035-droid/art-decor/refs/heads/main/img/Gemini_Generated_Image_v9hgtnv9hgtnv9hg%20(13).png" alt="קיר סלון מעוצב"></div>
-            <div class="grid-item"><img src="https://raw.githubusercontent.com/o0527656035-droid/art-decor/refs/heads/main/img/%D7%A4%D7%99%D7%A0%D7%AA%20%D7%90%D7%95%D7%9B%D7%9C%20%D7%9C%D7%95%D7%90%D7%992.png" alt="טפט יוקרתי בחדר שינה"></div>
+            <div class="grid-item"><img src="https://raw.githubusercontent.com/o0527656035-droid/art-decor/refs/heads/main/img/%D7%A4%D7%99%D7%A0%D7%AA%20%D7%90%D7%95%D7%9B%D7%9C%20%D7%9C%D7%95%D7%90%D7%992.png" alt="טפט יוקרתי"></div>
             <div class="grid-item"><img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?q=80&w=2034" alt="חיפוי קיר מודרני"></div>
-            <div class="grid-item"><img src="https://images.unsplash.com/photo-1556912177-f39b6912389d?q=80&w=1974" alt="צביעה אומנותית למטבח"></div>
+            <div class="grid-item"><img src="https://images.unsplash.com/photo-1556912177-f39b6912389d?q=80&w=1974" alt="צביעה אומנותית"></div>
             <div class="grid-item"><img src="https://images.unsplash.com/photo-1616489953149-80798939634e?q=80&w=1964" alt="עיצוב קיר כוח"></div>
             <div class="grid-item"><img src="https://images.unsplash.com/photo-1615529182904-14819c35db37?q=80&w=2080" alt="פרטי עיצוב זהב"></div>
         </div>
     </section>
 
     <div id="modal" class="modal">
-        <span class="close-modal" title="סגור">&times;</span>
-        <img id="modal-img" src="" alt="תמונה מוגדלת">
+        <span class="close-modal">&times;</span>
+        <img id="modal-img" src="">
     </div>
 
     <footer>
-        <p>© 2026 <span class="gold-text">Wall Art Design</span> | מומחים בעיצוב קירות</p>
-        <p>סגנון יוצא דופן. איכות ללא פשרות.</p>
+        <p>© 2026 <span class="gold-text">Wall Art Design</span> | אמנות ועיצוב קירות</p>
     </footer>
 
     <script>
-        // קוד להגדלת תמונות בלחיצה
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modal-img');
         const gridItems = document.querySelectorAll('.grid-item img');
@@ -348,30 +211,19 @@
             img.addEventListener('click', () => {
                 modal.classList.add('open');
                 modalImg.src = img.src;
-                // מניעת גלילה של הדף ברקע
                 document.body.style.overflow = 'hidden';
             });
         });
 
-        function closeModal() {
+        closeBtn.addEventListener('click', () => {
             modal.classList.remove('open');
-            // החזרת הגלילה
             document.body.style.overflow = 'auto';
-        }
-
-        closeBtn.addEventListener('click', closeModal);
-
-        // סגירה בלחיצה מחוץ לתמונה
-        window.addEventListener('click', (e) => {
-            if (e.target == modal) {
-                closeModal();
-            }
         });
 
-        // סגירה בלחיצה על מקש Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('open')) {
-                closeModal();
+        window.addEventListener('click', (e) => {
+            if (e.target == modal) {
+                modal.classList.remove('open');
+                document.body.style.overflow = 'auto';
             }
         });
     </script>
