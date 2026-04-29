@@ -9,9 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* ==============================
-           הגדרות עיצוב וצבעים
-           ============================== */
         :root {
             --primary-green: #1a3c34; 
             --dark-green: #122a24;    
@@ -57,7 +54,7 @@
             filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
         }
 
-        /* כפתור מייל צף */
+        /* כפתור מייל צף - מיוצב בשמאל */
         .floating-contact {
             position: fixed;
             bottom: 30px;
@@ -72,8 +69,9 @@
             align-items: center;
             color: var(--dark-green);
             font-size: 28px;
+            text-decoration: none;
             box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            transition: all 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             border: 2px solid var(--gold-light);
             cursor: pointer;
         }
@@ -124,9 +122,7 @@
         .grid-item:hover { transform: translateY(-10px); border-color: var(--gold-light); }
         .grid-item:hover img { transform: scale(1.1); opacity: 1; }
 
-        /* ==============================
-           סעיף "למה אנחנו" - שורה אחת
-           ============================== */
+        /* סעיף "למה אנחנו" - שורה אחת */
         .features-section {
             padding: 80px 8%;
             background: rgba(0, 0, 0, 0.2);
@@ -136,15 +132,10 @@
 
         .features-grid {
             display: grid;
-            /* שינוי כאן: מאלץ 3 עמודות שוות בשורה אחת */
             grid-template-columns: repeat(3, 1fr); 
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .feature-item {
-            padding: 20px;
         }
 
         .feature-item i {
@@ -165,11 +156,11 @@
         .feature-item p {
             color: #c9d6d3;
             font-size: 1rem;
-            max-width: 300px;
+            max-width: 280px;
             margin: 0 auto;
         }
 
-        /* מודל ותחתית */
+        /* מודל */
         .modal {
             display: none;
             position: fixed;
@@ -195,21 +186,16 @@
             border-top: 2px solid var(--gold-main);
         }
 
-        /* התאמה לנייד */
         @media (max-width: 768px) {
             .gallery-section h2 { font-size: 2.2rem; }
-            .features-grid {
-                /* בנייד זה חייב לעבור לערימה אחד מעל השני כדי שיישאר קריא */
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
+            .features-grid { grid-template-columns: 1fr; gap: 40px; }
             .floating-contact { width: 55px; height: 55px; bottom: 20px; left: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <a href="javascript:void(0);" onclick="openProtectedEmail()" class="floating-contact" title="שלח הודעה">
+    <a href="javascript:void(0);" id="mailBtn" class="floating-contact" title="שלח הודעה">
         <i class="fas fa-envelope"></i>
     </a>
 
@@ -261,13 +247,16 @@
     </footer>
 
     <script>
-        function openProtectedEmail() {
-            var user = "o0527656035"; 
-            var domain = "@gmail.com";
-            var mailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=" + user + "@" + domain + "&su=פניה מהאתר";
-            window.open(mailUrl, '_blank');
-        }
+        // פונקציית המייל - מוגנת ופשוטה
+        document.getElementById('mailBtn').addEventListener('click', function() {
+            var u = "YOUR_EMAIL"; // השם לפני ה-@
+            var d = "gmail.com";  // הדומיין
+            var s = encodeURIComponent("פניה מהאתר - ART DECOR");
+            var url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + u + "@" + d + "&su=" + s;
+            window.open(url, '_blank');
+        });
 
+        // גלריה
         const modal = document.getElementById('modal');
         const modalImg = document.getElementById('modal-img');
         const gridItems = document.querySelectorAll('.grid-item img');
