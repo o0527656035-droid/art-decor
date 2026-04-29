@@ -1,315 +1,380 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ART-DECOR</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary-green: #1a3c34; 
-            --dark-green: #122a24;    
-            --gold-main: #d4af37;    
-            --gold-light: #f1e0ac;   
-            --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c); 
-            --text-on-green: #ffffff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ART-DECOR | אושרת אלגרבלי</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root {
+--primary-green: #1a3c34;
+--dark-green: #122a24;
+--gold-main: #d4af37;
+--gold-light: #f1e0ac;
+--gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+--text-on-green: #ffffff;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'taoma', sans-serif;
-        }
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Assistant', sans-serif;
+}
 
-        body {
-            background: radial-gradient(circle at center, #1e453c 0%, #122a24 100%);
-            background-attachment: fixed;
-            color: var(--text-on-green);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+body {
+background: radial-gradient(circle at center, #1e453c 0%, #122a24 100%);
+background-attachment: fixed;
+color: var(--text-on-green);
+line-height: 1.6;
+overflow-x: hidden;
+}
 
-        /* תפריט ניווט */
-        nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(18, 42, 36, 0.95);
-            padding: 1rem 8%;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            border-bottom: 2px solid var(--gold-main);
-            backdrop-filter: blur(10px);
-        }
+/* =========================================
+   מסך פתיחה (Splash Screen) - פס טעינה במרכז
+   ========================================= */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-green);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease, visibility 1s;
+}
 
-        .logo-container img {
-            height: 80px;
-            width: auto;
-            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
-        }
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: pulse 2s infinite ease-in-out;
+}
 
-        /* כפתור מייל צף - מיוצב בשמאל */
-        .floating-contact {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            z-index: 2000;
-            width: 65px;
-            height: 65px;
-            background: var(--gold-gradient);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--dark-green);
-            font-size: 28px;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: 2px solid var(--gold-light);
-            cursor: pointer;
-        }
+.splash-content img {
+    width: 250px;
+    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+}
 
-        .floating-contact:hover { transform: scale(1.08); }
-        .floating-contact:active { transform: scale(0.92); }
+.splash-loader {
+    margin-top: 25px;
+    width: 160px;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
 
-        /* גלריה */
-        .gallery-section {
-            padding: 60px 8% 20px 8%;
-            text-align: center;
-        }
+.splash-loader::after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--gold-gradient);
+    animation: loadingLine 2s infinite ease-in-out;
+}
 
-        .gallery-section h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 40px;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
-        }
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
+@keyframes loadingLine {
+    0% { left: -100%; }
+    50% { left: 0%; }
+    100% { left: 100%; }
+}
 
-        .grid-item {
-            overflow: hidden;
-            border-radius: 12px;
-            cursor: pointer;
-            height: 380px;
-            border: 3px solid var(--gold-main); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: all 0.4s ease;
-        }
+.fade-out { opacity: 0; visibility: hidden; }
 
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-            opacity: 0.9;
-        }
+/* =========================================
+   עיצוב התפריט (Nav) והלוגו המוגדל
+   ========================================= */
+nav {
+display: flex;
+justify-content: center;
+align-items: center;
+background: rgba(18, 42, 36, 0.95);
+padding: 1.5rem 8%; /* הגדלתי את הריפוד */
+position: sticky;
+top: 0;
+z-index: 1000;
+box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+border-bottom: 2px solid var(--gold-main);
+backdrop-filter: blur(10px);
+}
 
-        .grid-item:hover { transform: translateY(-10px); border-color: var(--gold-light); }
-        .grid-item:hover img { transform: scale(1.1); opacity: 1; }
+.logo-container img {
+height: 120px; /* הגדלתי את הלוגו למעלה מ-80px ל-120px */
+width: auto;
+filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.7));
+transition: transform 0.3s ease;
+}
 
-        /* סעיף "למה אנחנו" - שורה אחת */
-        .features-section {
-            padding: 80px 8%;
-            background: rgba(0, 0, 0, 0.2);
-            text-align: center;
-            margin-top: 50px;
-        }
+.logo-container img:hover {
+    transform: scale(1.05);
+}
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+/* =========================================
+   גלריה (חזרה לגודל המקורי)
+   ========================================= */
+.gallery-section {
+padding: 60px 8%;
+text-align: center;
+}
 
-        .feature-item i {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.gallery-section h1 {
+font-size: 3.5rem;
+font-weight: 800;
+margin-bottom: 50px;
+background: var(--gold-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
+}
 
-        .feature-item h3 {
-            font-size: 1.5rem;
-            color: var(--gold-main);
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
+.grid-container {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+gap: 30px;
+}
 
-        .feature-item p {
-            color: #c9d6d3;
-            font-size: 1rem;
-            max-width: 280px;
-            margin: 0 auto;
-        }
+.grid-item {
+overflow: hidden;
+border-radius: 12px;
+cursor: pointer;
+height: 380px;
+border: 3px solid var(--gold-main);
+box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+transition: all 0.4s ease;
+}
 
-        /* מודל */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 3000;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 20, 18, 0.98);
-            justify-content: center;
-            align-items: center;
-        }
+.grid-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+transition: transform 0.6s ease;
+opacity: 0.9;
+}
 
-        .modal.open { display: flex; }
-        .modal img { max-width: 90%; max-height: 85%; border: 4px solid var(--gold-main); }
-        .close-modal { position: absolute; top: 25px; right: 40px; color: var(--gold-main); font-size: 50px; cursor: pointer; }
+.grid-item:hover { transform: translateY(-10px); border-color: var(--gold-light); }
+.grid-item:hover img { transform: scale(1.1); opacity: 1; }
 
-        footer {
-            background: var(--dark-green);
-            color: #8c9c98;
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 2px solid var(--gold-main);
-        }
+.features-section {
+padding: 80px 8%;
+background: rgba(0, 0, 0, 0.2);
+text-align: center;
+margin-top: 50px;
+}
 
-        @media (max-width: 768px) {
-            .gallery-section h1 { font-size: 2.2rem; }
-            .features-grid { grid-template-columns: 1fr; gap: 40px; }
-            .floating-contact { width: 55px; height: 55px; bottom: 20px; left: 20px; }
-        }
-    </style>
+.features-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.feature-item i {
+font-size: 2.8rem;
+margin-bottom: 15px;
+background: var(--gold-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.feature-item h3 {
+font-size: 1.5rem;
+color: var(--gold-main);
+margin-bottom: 12px;
+font-weight: 700;
+}
+
+.feature-item p {
+color: #c9d6d3;
+font-size: 1rem;
+max-width: 280px;
+margin: 0 auto;
+}
+
+.modal {
+display: none;
+position: fixed;
+z-index: 3000;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(10, 20, 18, 0.98);
+justify-content: center;
+align-items: center;
+}
+
+.modal.open { display: flex; }
+.modal img { max-width: 90%; max-height: 85%; border: 4px solid var(--gold-main); }
+.close-modal { position: absolute; top: 25px; right: 40px; color: var(--gold-main); font-size: 50px; cursor: pointer; }
+
+footer {
+background: var(--dark-green);
+color: #8c9c98;
+text-align: center;
+padding: 40px 20px;
+border-top: 2px solid var(--gold-main);
+}
+
+.floating-contact {
+position: fixed;
+bottom: 30px;
+left: 30px;
+z-index: 2000;
+width: 65px;
+height: 65px;
+background: var(--gold-gradient);
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+color: var(--dark-green);
+font-size: 28px;
+box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+transition: transform 0.2s ease;
+border: 2px solid var(--gold-light);
+}
+
+@media (max-width: 768px) {
+.logo-container img { height: 90px; }
+.gallery-section h1 { font-size: 2.5rem; }
+.features-grid { grid-template-columns: 1fr; }
+.floating-contact { width: 55px; height: 55px; left: 15px; }
+}
+</style>
 </head>
 <body>
 
-    <a href="javascript:void(0);" id="mailBtn" class="floating-contact" title="שלח הודעה">
-        <i class="fas fa-envelope"></i>
-    </a>
-
-    <nav>
-        <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/o0527656035-droid/art-decor/refs/heads/main/LOGO-ART.png" alt="Art Decor Logo">
-        </div>
-    </nav>
-
-    <section id="gallery" class="gallery-section">
-        <h1>גלריית פרויקטים</h1>
-        <div class="grid-container">
-            <div class="grid-item"><img src="img/1.jpg" alt="1"></div>
-            <div class="grid-item"><img src="img/2.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/3.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/4.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/5.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/6.jpg" alt="1"></div>
-            <div class="grid-item"><img src="img/7.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/8.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/9.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/10.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/11.jpg" alt="1"></div>
-            <div class="grid-item"><img src="img/12.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/13.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/14.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/15.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/16.jpg" alt="1"></div>
-            <div class="grid-item"><img src="img/17.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/18.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/19.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/20.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/21.jpg" alt="1"></div>
-            <div class="grid-item"><img src="img/22.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/23.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/24.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/25.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/26.jpg" alt="1"></div>
-            <div class="grid-item"><img src="img/27.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/28.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/29.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/30.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/31.jpg" alt="1"></div>
-            <div class="grid-item"><img src="img/32.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/33.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/34.jpg" alt="2"></div>
-            <div class="grid-item"><img src="img/35.jpg" alt="2"></div>
-        </div>
-    </section>
-
-    <section class="features-section">
-        <div class="features-grid">
-            <div class="feature-item">
-                <i class="fas fa-gem"></i>
-                <h3>דיוק ואיכות</h3>
-                <p>חומרים מובילים המבטיחים רמת גימור מושלמת ועמידות לאורך שנים.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-paint-brush"></i>
-                <h3>עיצוב אישי</h3>
-                <p>התאמת טקסטורות וגוונים בדיוק לחזון ולחלל הבית הייחודי שלכם.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-medal"></i>
-                <h3>מקצוענות</h3>
-                <p>ליווי מלא, עמידה בלוחות זמנים ושירות ללא פשרות עד לתוצאה.</p>
-            </div>
-        </div>
-    </section>
-
-    <div id="modal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img id="modal-img" src="">
+<div id="splash-screen">
+    <div class="splash-content">
+        <img src="https://raw.githubusercontent.com/o0527656035-droid/art-decor/refs/heads/main/LOGO-ART.png" alt="Logo">
+        <div class="splash-loader"></div>
     </div>
+</div>
 
-    <footer>
-        <p>© 2026 | <span style="color:var(--gold-main)">אושרת אלגרבלי קירות בעיצוב אומנותי</span></p>
-    </footer>
+<a href="javascript:void(0);" id="mailBtn" class="floating-contact" title="שלח הודעה">
+<i class="fas fa-envelope"></i>
+</a>
 
-    <script>
-        // פונקציית המייל - מוגנת ופשוטה
-        document.getElementById('mailBtn').addEventListener('click', function() {
-            var u = "o0527656035"; // השם לפני ה-@
-            var d = "gmail.com";  // הדומיין
-            var s = encodeURIComponent("פניה מהאתר - ART DECOR");
-            var url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + u + "@" + d + "&su=" + s;
-            window.open(url, '_blank');
-        });
+<nav>
+<div class="logo-container">
+<img src="https://raw.githubusercontent.com/o0527656035-droid/art-decor/refs/heads/main/LOGO-ART.png" alt="Art Decor Logo">
+</div>
+</nav>
 
-        // גלריה
-        const modal = document.getElementById('modal');
-        const modalImg = document.getElementById('modal-img');
-        const gridItems = document.querySelectorAll('.grid-item img');
-        const closeBtn = document.querySelector('.close-modal');
+<section id="gallery" class="gallery-section">
+<h1>גלריית פרויקטים</h1>
+<div class="grid-container">
+    <div class="grid-item"><img src="img/1.jpg" alt="1"></div>
+    <div class="grid-item"><img src="img/2.jpg" alt="2"></div>
+    <div class="grid-item"><img src="img/3.jpg" alt="3"></div>
+    <div class="grid-item"><img src="img/4.jpg" alt="4"></div>
+    <div class="grid-item"><img src="img/5.jpg" alt="5"></div>
+    <div class="grid-item"><img src="img/6.jpg" alt="6"></div>
+    <div class="grid-item"><img src="img/7.jpg" alt="7"></div>
+    <div class="grid-item"><img src="img/8.jpg" alt="8"></div>
+    <div class="grid-item"><img src="img/9.jpg" alt="9"></div>
+    <div class="grid-item"><img src="img/10.jpg" alt="10"></div>
+    <div class="grid-item"><img src="img/11.jpg" alt="11"></div>
+    <div class="grid-item"><img src="img/12.jpg" alt="12"></div>
+    <div class="grid-item"><img src="img/13.jpg" alt="13"></div>
+    <div class="grid-item"><img src="img/14.jpg" alt="14"></div>
+    <div class="grid-item"><img src="img/15.jpg" alt="15"></div>
+    <div class="grid-item"><img src="img/16.jpg" alt="16"></div>
+    <div class="grid-item"><img src="img/17.jpg" alt="17"></div>
+    <div class="grid-item"><img src="img/18.jpg" alt="18"></div>
+    <div class="grid-item"><img src="img/19.jpg" alt="19"></div>
+    <div class="grid-item"><img src="img/20.jpg" alt="20"></div>
+    <div class="grid-item"><img src="img/21.jpg" alt="21"></div>
+    <div class="grid-item"><img src="img/22.jpg" alt="22"></div>
+    <div class="grid-item"><img src="img/23.jpg" alt="23"></div>
+    <div class="grid-item"><img src="img/24.jpg" alt="24"></div>
+    <div class="grid-item"><img src="img/25.jpg" alt="25"></div>
+    <div class="grid-item"><img src="img/26.jpg" alt="26"></div>
+    <div class="grid-item"><img src="img/27.jpg" alt="27"></div>
+    <div class="grid-item"><img src="img/28.jpg" alt="28"></div>
+    <div class="grid-item"><img src="img/29.jpg" alt="29"></div>
+    <div class="grid-item"><img src="img/30.jpg" alt="30"></div>
+    <div class="grid-item"><img src="img/31.jpg" alt="31"></div>
+    <div class="grid-item"><img src="img/32.jpg" alt="32"></div>
+    <div class="grid-item"><img src="img/33.jpg" alt="33"></div>
+    <div class="grid-item"><img src="img/34.jpg" alt="34"></div>
+    <div class="grid-item"><img src="img/35.jpg" alt="35"></div>
+</div>
+</section>
 
-        gridItems.forEach(img => {
-            img.addEventListener('click', () => {
-                modal.classList.add('open');
-                modalImg.src = img.src;
-                document.body.style.overflow = 'hidden';
-            });
-        });
+<section class="features-section">
+<div class="features-grid">
+<div class="feature-item"><i class="fas fa-gem"></i><h3>דיוק ואיכות</h3><p>חומרים מובילים המבטיחים רמת גימור מושלמת.</p></div>
+<div class="feature-item"><i class="fas fa-paint-brush"></i><h3>עיצוב אישי</h3><p>התאמת טקסטורות וגוונים לחזון שלכם.</p></div>
+<div class="feature-item"><i class="fas fa-medal"></i><h3>מקצוענות</h3><p>עמידה בלוחות זמנים ושירות ללא פשרות.</p></div>
+</div>
+</section>
 
-        closeBtn.addEventListener('click', () => {
-            modal.classList.remove('open');
-            document.body.style.overflow = 'auto';
-        });
+<div id="modal" class="modal">
+<span class="close-modal">&times;</span>
+<img id="modal-img" src="">
+</div>
 
-        window.addEventListener('click', (e) => {
-            if (e.target == modal) {
-                modal.classList.remove('open');
-                document.body.style.overflow = 'auto';
-            }
-        });
-    </script>
+<footer>
+<p>© 2026 | <span style="color:var(--gold-main)">אושרת אלגרבלי קירות בעיצוב אומנותי</span></p>
+</footer>
+
+<script>
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const splash = document.getElementById('splash-screen');
+        splash.classList.add('fade-out');
+        document.body.style.overflow = 'auto';
+    }, 2500);
+});
+
+document.getElementById('mailBtn').addEventListener('click', function() {
+    var u = "o0527656035"; 
+    var d = "gmail.com"; 
+    var s = encodeURIComponent("פניה מהאתר - ART DECOR");
+    var url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + u + "@" + d + "&su=" + s;
+    window.open(url, '_blank');
+});
+
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modal-img');
+const gridItems = document.querySelectorAll('.grid-item img');
+const closeBtn = document.querySelector('.close-modal');
+
+gridItems.forEach(img => {
+    img.addEventListener('click', () => {
+        modal.classList.add('open');
+        modalImg.src = img.src;
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+closeBtn.addEventListener('click', () => {
+    modal.classList.remove('open');
+    document.body.style.overflow = 'auto';
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target == modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = 'auto';
+    }
+});
+</script>
 </body>
 </html>
